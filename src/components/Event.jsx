@@ -58,7 +58,6 @@ function Event(props) {
           >
             {isLiked ? "Dislike" : "Like"}
           </button>
-          {/* Delete event button */}
           <button
               onClick={handleDeleteEvent}
               className="ml-3 inline-flex items-center px-3 py-2 text-sm text-center bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 text-white font-bold rounded"
