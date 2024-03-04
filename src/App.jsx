@@ -1,6 +1,5 @@
 import { Suspense, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -14,6 +13,7 @@ import React from "react";
 import AddEvent from "./components/AddEvent.jsx";
 import {useDispatch} from "react-redux";
 import {fetchEvents} from "./redux/slices/eventsSlice.js";
+import Wishlist from "./components/Wishlist.jsx";
 function App() {
   //const [count, setCount] = useState(0);
   const Events = React.lazy(() => import("./components/Events.jsx"));
@@ -32,6 +32,7 @@ function App() {
             <Route path="/events" element={<Events />}  loader={dispatch(fetchEvents())}/>
             <Route path="/add" element={<AddEvent />} />
             <Route path="/event/:eventTitle" element={<EventDetails />} />
+            <Route path="/wishlist" element={<Wishlist />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

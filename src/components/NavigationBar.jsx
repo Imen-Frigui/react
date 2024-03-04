@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,6 +14,9 @@ function NavigationBar() {
             </Link>
             <Link to="/events" className="text-white hover:text-gray-300">
               Events
+            </Link>
+            <Link to="/wishlist" className="text-white hover:text-gray-300">
+              Wishlist (<span>{/* count of wishlist */}</span>)
             </Link>
           </div>
         </div>

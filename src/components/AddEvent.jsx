@@ -1,7 +1,6 @@
 import { Button, Form } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'; // Import useHistory
-import { addEvent } from "../service/api.js";
 import { useDispatch } from 'react-redux';
 import { addEventThunk } from '../redux/slices/eventsSlice.js';
 function AddEvent() {
@@ -17,12 +16,11 @@ function AddEvent() {
         img: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    //const [errorMessage, setErrorMessage] = useState('');
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // Perform initialization or fetch data
     }, []);
 
     const handleChange = (e) => {
@@ -37,15 +35,7 @@ function AddEvent() {
         e.preventDefault();
         setIsSubmitting(true);
         dispatch(addEventThunk(newEvent))
-            .then(() => {
-                navigate('/events');
-            })
-            .catch(() => { // Removed the error parameter since it's not used
-                setErrorMessage('Failed to add the event. Please try again.');
-            })
-            .finally(() => {
-                setIsSubmitting(false);
-            });
+        navigate('/events')
     };
 
     return (
@@ -69,7 +59,6 @@ function AddEvent() {
                     required
                 />
             </Form.Field>
-            {/* Include other fields like date, time, etc., similar to the above */}
             <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Add Event'}
             </Button>

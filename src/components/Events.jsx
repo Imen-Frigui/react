@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEvents } from "../redux/slices/eventsSlice.js"; // Make sure the path is correct
+import { fetchEvents } from "../redux/slices/eventsSlice.js";
 import Event from "./Event";
 import NavigationBar from "./NavigationBar";
 
 function Events() {
     const dispatch = useDispatch();
-    const events = useSelector((state) => state.events.events); // Adjust according to your state structure
+    const events = useSelector((state) => state.events.events);
 
     useEffect(() => {
         dispatch(fetchEvents());
