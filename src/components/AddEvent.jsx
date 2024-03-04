@@ -2,7 +2,8 @@ import { Button, Form } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'; // Import useHistory
 import { addEvent } from "../service/api.js";
-
+import { useDispatch } from 'react-redux';
+import { addEventThunk } from '../redux/slices/eventsSlice.js';
 function AddEvent() {
     const navigate = useNavigate()
     const [newEvent, setNewEvent] = useState({
@@ -17,6 +18,8 @@ function AddEvent() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Perform initialization or fetch data
@@ -33,14 +36,16 @@ function AddEvent() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        try {
-            await addEvent(newEvent);
-            navigate('/events');
-        } catch (error) {
-            setErrorMessage('Failed to add the event. Please try again.');
-        } finally {
-            setIsSubmitting(false);
-        }
+        dispatch(addEventThunk(newEvent))
+            .then(() => {
+                navigate('/events');
+            })
+            .catch(() => { // Removed the error parameter since it's not used
+                setErrorMessage('Failed to add the event. Please try again.');
+            })
+            .finally(() => {
+                setIsSubmitting(false);
+            });
     };
 
     return (

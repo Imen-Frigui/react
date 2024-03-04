@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import { deleteEvent } from "../service/api.js"; // Import the delete function from your API service
+import { deleteEvent } from "../service/api.js";
+import {useDispatch} from "react-redux";
+import {deleteEventThunk} from "../redux/slices/eventsSlice.js"; // Import the delete function from your API service
 
 function Event(props) {
   const [nbParticipants, setNbParticipants] = useState(props.nbParticipants);
@@ -9,10 +11,13 @@ function Event(props) {
   const [isLiked, SetIsLike] = useState(false);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const handleDeleteEvent = async () => {
-      await deleteEvent(props.id);
-      console.log(props.id);
-      navigate("/events");
+    dispatch(deleteEventThunk(props.id))
+        .then(() => {
+          console.log(`${props.id} deleted`);
+          navigate('/events');
+        })
   };
 
   const bookEvent = () => {
