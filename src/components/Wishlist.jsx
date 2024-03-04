@@ -7,33 +7,32 @@ import {
 } from '../redux/slices/wishlistSlice.js'
 function Wishlist() {
     const dispatch = useDispatch();
-    const wishlistItems = useSelector((state) => state.wishlist.items);
+    const wishlistItems = useSelector((state) => state.wishlist.wishlist);
 
-    const handleAddItem = (item) => {
-        dispatch(increment(item));
-    };
-
-    const handleRemoveItem = (item) => {
-        dispatch(remove(item));
-    };
-
-    const handleDeleteItem = (itemId) => {
-        dispatch(decrement(itemId));
-    };
+    const total = wishlistItems.reduce((accumulator, item) => {
+        return accumulator + (item.price * item.quantity);
+    }, 0);
 
     return (
-        <div>
-            <h2>My Wishlist</h2>
-            <ul>
-                {wishlistItems.map((item) => (
-                    <li key={item.id}>
-                        {item.name} - {item.description}
-                        <button onClick={() => handleAddItem(item)}>+</button>
-                        <button onClick={() => handleRemoveItem(item)}>-</button>
-                        <button onClick={() => handleDeleteItem(item.id)}>x</button>
-                    </li>
-                ))}
-            </ul>
+        <div className="wishlist-container">
+            <h2>WISHLIST</h2>
+            {wishlistItems.map((item) => (
+                <div key={item.id} className="wishlist-item">
+                    <img src={item.image} alt={item.name}/>
+                    <div>
+                        <h3>{item.name}</h3>
+                        <p>{item.price} DT</p>
+                        <button onClick={() => dispatch(remove(item.id))}>-</button>
+                        <span> {item.quantity} </span>
+                        <button onClick={() => dispatch(increment(item))}>+</button>
+                        <p>Total Price: {item.price * item.quantity}DT</p>
+                        <button onClick={() => dispatch(decrement(item.id))}>x</button>
+                    </div>
+                </div>
+            ))}
+            <div className="total-price">
+                <strong>Total: {total} DT</strong>
+            </div>
         </div>
     );
 }

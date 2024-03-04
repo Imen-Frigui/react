@@ -1,8 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Link } from "react-router-dom";
+import {useSelector} from "react-redux";
 
 function NavigationBar() {
+  const wishlistItems = useSelector((state) => state.wishlist.wishlist);
   return (
     <>
       <div className="bg-blue-500 p-4">
@@ -16,7 +18,7 @@ function NavigationBar() {
               Events
             </Link>
             <Link to="/wishlist" className="text-white hover:text-gray-300">
-              Wishlist (<span>{/* count of wishlist */}</span>)
+              Wishlist (<span>{wishlistItems.length}</span>)
             </Link>
           </div>
         </div>
